@@ -22,7 +22,6 @@ resource "azurerm_linux_web_app" "terraformAppService" {
   name                = "dawallin-terraform-wa"
   location            = azurerm_resource_group.terraformResourceGroup.location
   resource_group_name = azurerm_resource_group.terraformResourceGroup.name
-  app_service_plan_id = azurerm_service_plan.terraformResourceGroup.id
   service_plan_id = azurerm_service_plan.terraformAppServicePlan.id 
   site_config {}
 }
