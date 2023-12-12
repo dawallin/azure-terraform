@@ -9,7 +9,7 @@ resource "azurerm_resource_group" "terraformResourceGroup" {
 }
 
 # Azure App Service Plan
-resource "azurerm_app_service_plan" "terraformAppServicePlan" {
+resource "azurerm_service_plan" "terraformAppServicePlan" {
   name                = "dawallin-terraform-as"
   location            = azurerm_resource_group.terraformResourceGroup.location
   resource_group_name = azurerm_resource_group.terraformResourceGroup.name
