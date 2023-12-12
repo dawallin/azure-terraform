@@ -4,13 +4,13 @@ provider "azurerm" {
 
 # Azure Resource Group
 resource "azurerm_resource_group" "terraformResourceGroup" {
-  name     = "dawallin-terraform-rg2"
+  name     = "dawallin-terraform-rg"
   location = "West Europe"
 }
 
 # Azure App Service Plan
 resource "azurerm_service_plan" "terraformAppServicePlan" {
-  name                = "dawallin-terraform-as2"
+  name                = "dawallin-terraform-as"
   location            = azurerm_resource_group.terraformResourceGroup.location
   resource_group_name = azurerm_resource_group.terraformResourceGroup.name
   os_type = "Linux"
@@ -19,7 +19,7 @@ resource "azurerm_service_plan" "terraformAppServicePlan" {
 
 # Azure App Service
 resource "azurerm_linux_web_app" "terraformAppService" {
-  name                = "dawallin-terraform-wa2"
+  name                = "dawallin-terraform-wa"
   location            = azurerm_resource_group.terraformResourceGroup.location
   resource_group_name = azurerm_resource_group.terraformResourceGroup.name
   service_plan_id = azurerm_service_plan.terraformAppServicePlan.id 
