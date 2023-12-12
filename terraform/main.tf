@@ -5,7 +5,7 @@ provider "azurerm" {
 # Azure Resource Group
 resource "azurerm_resource_group" "terraformResourceGroup" {
   name     = "dawallin-terraform-rg"
-  location = "Sweden Central"
+  location = "West Europe"
 }
 
 # Azure App Service Plan
