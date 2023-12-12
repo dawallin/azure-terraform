@@ -13,11 +13,8 @@ resource "azurerm_service_plan" "terraformAppServicePlan" {
   name                = "dawallin-terraform-as"
   location            = azurerm_resource_group.terraformResourceGroup.location
   resource_group_name = azurerm_resource_group.terraformResourceGroup.name
-
-  sku {
-    tier = "Free"
-    size = "F1"
-  }
+  os_type = "Linux"
+  sku_name = "F1"
 }
 
 # Azure App Service
