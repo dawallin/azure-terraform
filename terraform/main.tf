@@ -18,11 +18,12 @@ resource "azurerm_service_plan" "terraformAppServicePlan" {
 }
 
 # Azure App Service
-resource "azurerm_app_service" "terraformAppService" {
-  name                = "example-app-service"
+resource "azurerm_linux_web_app" "terraformAppService" {
+  name                = "dawallin-terraform-wa"
   location            = azurerm_resource_group.terraformResourceGroup.location
   resource_group_name = azurerm_resource_group.terraformResourceGroup.name
-  app_service_plan_id = azurerm_app_service_plan.terraformResourceGroup.id
+  app_service_plan_id = azurerm_service_plan.terraformResourceGroup.id
+  site_config {}
 }
 
 # Terraform Backend Configuration
