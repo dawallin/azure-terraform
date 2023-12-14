@@ -25,6 +25,7 @@ resource "azurerm_linux_web_app" "terraformAppService" {
   service_plan_id     = azurerm_service_plan.terraformAppServicePlan.id 
 
   site_config {
+    always_on = false
     application_stack {
       docker_image     = "dawallin/blazortest"
       docker_image_tag = "latest"
