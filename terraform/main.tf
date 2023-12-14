@@ -27,8 +27,8 @@ resource "azurerm_linux_web_app" "terraformAppService" {
   site_config {
     always_on = false
     application_stack {
-      docker_image     = "dawallin/blazortest"
-      docker_image_tag = "latest"
+      docker_image_name = "dawallin/blazortest:latest"
+      docker_registry_url = "https://index.docker.io/"
     }
   }
 }
