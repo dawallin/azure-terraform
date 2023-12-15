@@ -23,6 +23,18 @@ resource "azurerm_storage_container" "log_storage_container" {
   container_access_type = "private"
 }
 
+resource "azurerm_application_insights" "terraform_applicationinsight" {
+  name                = "dawallin-blazor-ai"
+  location            = azurerm_resource_group.terraformResourceGroup.location
+  resource_group_name = azurerm_resource_group.terraformResourceGroup.name
+  application_type    = "web"
+}
+
+output "app_insights_instrumentation_key" {
+  value = azurerm_application_insights.terraform_applicationinsight.instrumentation_key
+}
+
+
 # Azure App Service Plan
 resource "azurerm_service_plan" "terraformAppServicePlan" {
   name                = "dawallin-blazor-as"
@@ -41,6 +53,10 @@ resource "azurerm_linux_web_app" "terraformAppService" {
 
   site_config {
     always_on = false
+  }
+
+  app_settings = {
+    "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.terraform_applicationinsight.instrumentation_key
   }
 }
 
