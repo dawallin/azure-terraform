@@ -30,11 +30,6 @@ resource "azurerm_application_insights" "terraform_applicationinsight" {
   application_type    = "web"
 }
 
-output "app_insights_instrumentation_key" {
-  value = azurerm_application_insights.terraform_applicationinsight.instrumentation_key
-}
-
-
 # Azure App Service Plan
 resource "azurerm_service_plan" "terraformAppServicePlan" {
   name                = "dawallin-blazor-as"
