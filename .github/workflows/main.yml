@@ -59,3 +59,24 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ env.DOCKERHUB_REPOSITORY }}:${{ github.sha }}
+
+  build-and-deploy-blazor:
+    needs: terraform-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '8.0.x' # Specify your .NET version
+
+      - name: Build and Publish Blazor Project
+        run: |
+          dotnet publish ./BlazorTest/BlazorTest.csproj -c Release -o ./BlazorTest/bin/Release/net8.0/publish
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          package: ./BlazorTest/bin/Release/net8.0/publish
+          publish-profile: ${{ env.AZURE_WEBAPP_PUBLISH_PROFILE }}
