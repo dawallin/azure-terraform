@@ -5,6 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "WebApiTest",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/WebApiTest"
+        },
+        {
             "name": "BlazorTest",
             "type": "coreclr",
             "request": "launch",
