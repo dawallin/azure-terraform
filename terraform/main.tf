@@ -26,6 +26,8 @@ resource "azurerm_linux_web_app" "terraformAppService" {
 
   site_config {
     always_on = false
+  }
+  logs {
     application_logs {
       file_system_level = Verbose
     }
