@@ -56,6 +56,7 @@ resource "azurerm_linux_web_app" "terraformAppService" {
 
   app_settings = {
     "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.terraform_applicationinsight.instrumentation_key
+    "ASPNETCORE_ENVIRONMENT" = "Production"
   }
 }
 

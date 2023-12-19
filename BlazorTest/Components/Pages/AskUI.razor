@@ -1,0 +1,42 @@
+@page "/askUI"
+@rendermode InteractiveServer
+@inject HttpClient Http
+@inject IConfiguration Configuration
+
+<h2>Ask a question</h2>
+
+<InputText @bind-Value="userQuery" />
+<button @onclick="SubmitQuery">Ask</button>
+
+@if (response != null)
+{
+    <br />
+    <h2>Response</h2>
+    <p>@response</p>
+}
+
+@code {
+    private string apiUrl;
+ 
+    protected override void OnInitialized()
+    {
+        apiUrl = Configuration["BaseUrl"];
+    }
+
+    private string userQuery;
+    private string response = "...";
+
+    private async Task SubmitQuery()
+    {
+        var httpClient = new HttpClient();
+        var responseMessage = await httpClient.GetAsync($"{apiUrl}ask?query={userQuery}");
+        if (responseMessage.IsSuccessStatusCode)
+        {
+            response = await responseMessage.Content.ReadAsStringAsync();
+        }
+        else
+        {
+            response = "Error: Unable to fetch the response.";
+        }
+    }
+}
