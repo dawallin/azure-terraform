@@ -48,6 +48,8 @@ resource "azurerm_linux_web_app" "terraformAppService" {
 
   site_config {
     always_on = false
+    dotnet_framework_version = "v8.0"
+    app_command_line = "dotnet BlazorTest.dll"
   }
 
   app_settings = {
