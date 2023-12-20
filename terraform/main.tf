@@ -2,6 +2,11 @@ provider "azurerm" {
   features {}
 }
 
+variable "baseurl" {
+  description = "Base URL"
+  type        = string
+}
+
 # Azure Resource Group
 resource "azurerm_resource_group" "terraformResourceGroup" {
   name     = "dawallin-blazor-rg"
@@ -65,7 +70,7 @@ resource "azurerm_linux_web_app" "terraformAppService" {
     "ASPNETCORE_ENVIRONMENT" = "Production"
     "STORAGE_ACCOUNT_URL" = azurerm_storage_account.log_storage_account.primary_blob_endpoint
     "BLOB_CONTAINER_NAME" = azurerm_storage_container.data_container.name
-    "BaseUrl" = "https://${self.default_site_hostname}"
+    "BASE_URL" = var.baseurl
   }
 
   identity {
