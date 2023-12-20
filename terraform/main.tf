@@ -23,6 +23,12 @@ resource "azurerm_storage_container" "log_storage_container" {
   container_access_type = "private"
 }
 
+resource "azurerm_storage_container" "data_container" {
+  name                  = "data"
+  storage_account_name  = azurerm_storage_account.log_storage_account.name
+  container_access_type = "private"
+}
+
 resource "azurerm_application_insights" "terraform_applicationinsight" {
   name                = "dawallin-blazor-ai"
   location            = azurerm_resource_group.terraformResourceGroup.location
@@ -57,7 +63,21 @@ resource "azurerm_linux_web_app" "terraformAppService" {
   app_settings = {
     "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.terraform_applicationinsight.instrumentation_key
     "ASPNETCORE_ENVIRONMENT" = "Production"
+    "STORAGE_ACCOUNT_URL" = azurerm_storage_account.log_storage_account.primary_blob_endpoint
+    "BLOB_CONTAINER_NAME" = azurerm_storage_container.data_container.name
+    "BaseUrl" = "https://${self.default_site_hostname}"
   }
+
+  identity {
+    type = "SystemAssigned"
+  }
+}
+
+# Create a role assignment to give the managed identity access to the storage account
+resource "azurerm_role_assignment" "terraforAppServiceStorageRole" {
+  scope                = azurerm_storage_account.log_storage_account.id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = azurerm_linux_web_app.terraformAppService.identity.0.principal_id
 }
 
 # Terraform Backend Configuration
