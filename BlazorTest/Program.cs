@@ -1,5 +1,7 @@
 using BlazorTest.Components;
+using BlazorTest.Repositories;
 using Swashbuckle.AspNetCore;
+
 
 namespace BlazorTest;
 
@@ -17,6 +19,8 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddHttpClient();
+
+        builder.Services.AddScoped<IBlobStorageRepository, BlobStorageRepository>();
 
         var app = builder.Build();
 
